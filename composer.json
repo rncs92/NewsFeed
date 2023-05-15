@@ -1,0 +1,21 @@
+{
+    "name": "janis/news-feed",
+    "autoload": {
+        "psr-4": {
+            "NewsFeed\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rncs92",
+            "email": "123461096+rncs92@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.5",
+        "nikic/fast-route": "^1.3",
+        "twig/twig": "^3.0",
+        "nesbot/carbon": "^2.66",
+      "ext-json": "*"
+    }
+}
