@@ -8,65 +8,96 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>News Feed</title>
 </head>
-<body>
-<nav class="flex items-center justify-between flex-wrap bg-teal p-6">
+<body class="bg-amber-50">
+<nav class="flex items-center justify-between flex-wrap bg-slate-300 p-6">
     <div class="flex items-center flex-no-shrink text-grey mr-6">
-        <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54">
             <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/>
         </svg>
-        <span class="font-semibold text-xl tracking-tight">News Feed</span>
-    </div>
-    <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
-            <svg class="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-            </svg>
-        </button>
+        <span class="font-semibold text-xl tracking-tight">Best Source of Useless News</span>
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost:8000/"
-               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                Home
+            <a href="http://localhost:8000/">
+                <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-6 border border-gray-400 rounded shadow">
+                    Home
+                </button>
             </a>
         </div>
     </div>
 </nav>
-
-<div class="container my-12 mx-auto px-4 md:px-12">
-    <div class="flex flex-wrap -mx-4">
-        {% for post in posts %}
-            <div class="my-4 px-4 w-full md:w-1/2 lg:w-1/4">
-                <article class="overflow-hidden rounded-lg shadow-lg">
-                    <a href="post?id={{ post.postid }}">
-                        <img alt="Placeholder" class="block h-auto w-full"
-                             src="https://placehold.co/600x400/orange/white?text=Post Image">
-                    </a>
-                    <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-                        <h1 class="text-lg">
-                            <a class="no-underline hover:underline text-black" href="post?id={{ post.postid }}">
-                                {{ post.title|capitalize }}
+<div class="container my-10 px-6 mx-auto">
+    <section class="mb-10 text-gray-800 text-center md:text-left">
+        <h2 class="text-5xl font-bold mb-10 text-center">Latest articles</h2>
+        {% for index, post in posts %}
+            {% if index is divisible by(2) %}
+                <div class="grid md:grid-cols-2 gap-x-6 xl:gap-x-12 items-center mb-12">
+                    <div class="mb-6 md:mb-0">
+                        <div
+                                class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg"
+                                data-mdb-ripple="true" data-mdb-ripple-color="light">
+                            <img src="https://placehold.co/600x400/brown/white?text=Article photo"
+                                 class="w-full" alt="Placehold"/>
+                            <a href="post?id={{ post.postid }}">
+                                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+                                     style="background-color: rgba(251, 251, 251, 0.2)"></div>
                             </a>
-                        </h1>
-                    </header>
-                    <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-                        <a class="flex items-center no-underline hover:underline text-black"
-                           href="user?id={{ post.userid }}">
-                            <img alt="Placeholder" class="block rounded-full"
-                                 src="https://placehold.co/50x50?text=User">
-                            <p class="ml-2 text-sm">
-                                Author: User Nr.{{ post.userid }}
-                            </p>
-                        </a>
-                        <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
-                            <span class="hidden">Like</span>
-                            <i class="fa fa-heart"></i>
-                        </a>
-                    </footer>
-                </article>
-            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        <div class="mb-3 text-red-600 font-medium text-sm flex items-center justify-center md:justify-start">
+                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                                <path fill="currentColor"
+                                      d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"/>
+                            </svg>
+                            News
+                        </div>
+                        <p class="text-gray-500 mb-6">
+                            <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
+                                <a href="user?id={{ post.userid }}"
+                                   class="text-gray-900">{{ post.user.name }}</a></small>
+                        </p>
+                        <p class="text-gray-500">{{ post.body|capitalize }}</p>
+                    </div>
+                </div>
+
+            {% else %}
+
+                <div class="grid md:grid-cols-2 gap-x-6 xl:gap-x-12 items-center mb-12">
+                    <div class="mb-6 md:mb-0 md:order-2">
+                        <div
+                                class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover ripple shadow-lg rounded-lg"
+                                data-mdb-ripple="true" data-mdb-ripple-color="light">
+                            <img src="https://placehold.co/600x400/grey/yellow?text=Article photo"
+                                 class="w-full" alt="Louvre"/>
+                            <a href="post?id={{ post.postid }}">
+                                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+                                     style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 md:mb-0 md:order-1">
+                        <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        <div class="mb-3 text-yellow-500 font-medium text-sm flex items-center justify-center md:justify-start">
+                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                                <path fill="currentColor"
+                                      d="M608 64H32C14.33 64 0 78.33 0 96v320c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V96c0-17.67-14.33-32-32-32zM48 400v-64c35.35 0 64 28.65 64 64H48zm0-224v-64h64c0 35.35-28.65 64-64 64zm272 176c-44.19 0-80-42.99-80-96 0-53.02 35.82-96 80-96s80 42.98 80 96c0 53.03-35.83 96-80 96zm272 48h-64c0-35.35 28.65-64 64-64v64zm0-224c-35.35 0-64-28.65-64-64h64v64z"/>
+                            </svg>
+                            Business
+                        </div>
+                        <p class="text-gray-500 mb-6">
+                            <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
+                                <a href="user?id={{ post.userid }}"
+                                   class="text-gray-900">{{ post.user.name }}</a></small>
+                        </p>
+                        <p class="text-gray-500">{{ post.body|capitalize }}</p>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
-    </div>
+    </section>
 </div>
 </body>
 </html>

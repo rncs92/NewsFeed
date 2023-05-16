@@ -16,7 +16,7 @@ class User
     private string $catchPhrase;
 
     public function __construct(
-        int $userid,
+        int    $userid,
         string $name,
         string $username,
         string $email,

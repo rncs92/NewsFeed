@@ -9,30 +9,24 @@
     <title>News Feed</title>
 </head>
 <body>
-<nav class="flex items-center justify-between flex-wrap bg-teal p-6">
+<nav class="flex items-center bg-slate-300 justify-between flex-wrap bg-teal p-6">
     <div class="flex items-center flex-no-shrink text-grey mr-6">
-        <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54">
             <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/>
         </svg>
-        <span class="font-semibold text-xl tracking-tight">News Feed</span>
-    </div>
-    <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
-            <svg class="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-            </svg>
-        </button>
+        <span class="font-semibold text-xl tracking-tight">Best Source of Useless News</span>
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost:8000/"
-               class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                Home
+            <a href="http://localhost:8000/">
+                <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-6 border border-gray-400 rounded shadow">
+                    Home
+                </button>
             </a>
         </div>
     </div>
 </nav>
-<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900">
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-amber-50 dark:bg-gray-900">
     <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
         <article
                 class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
@@ -43,8 +37,7 @@
                              src="https://placehold.co/50x50?text=User" alt="User">
                         <div>
                             <a href="user?id={{ post.userid }}" rel="author"
-                               class="text-xl font-bold text-gray-900 dark:text-white">Author:
-                                User Nr.{{ post.userid }}</a>
+                               class="text-xl font-bold text-gray-900 dark:text-white">Author: {{ post.user.name }}</a>
                         </div>
                     </div>
                 </address>
@@ -70,7 +63,8 @@
                 </button>
             </form>
             {% for comment in comments %}
-                <article class="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                <article
+                        class="p-6 text-base bg-amber-50 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
                             <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
@@ -83,42 +77,13 @@
                                 </time>
                             </p>
                         </div>
-                        <button id="dropdownComment4Button" data-dropdown-toggle="dropdownComment4"
-                                class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                type="button">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
-                                </path>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdownComment4"
-                             class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton">
-                                <li>
-                                    <a href="#"
-                                       class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black">Edit</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black">Remove</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black">Report</a>
-                                </li>
-                            </ul>
-                        </div>
                     </footer>
                     <p>{{ comment.body|capitalize }}</p>
                     <div class="flex items-center mt-4 space-x-4">
                         <button type="button"
                                 class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
                             <svg aria-hidden="true" class="mr-1 w-4 h-4" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                             </svg>
@@ -130,7 +95,7 @@
         </article>
     </div>
 </main>
-<aside aria-label="Related articles" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
+<aside aria-label="Related articles" class="py-8 lg:py-24 bg-amber-100 dark:bg-gray-800">
     <div class="px-4 mx-auto max-w-screen-xl">
         <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related articles</h2>
         <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -201,7 +166,7 @@
         </div>
     </div>
 </aside>
-<footer class="bg-gray-50 dark:bg-gray-800">
+<footer class="bg-amber-100 dark:bg-gray-800">
     <div class="p-4 py-6 mx-auto max-w-screen-xl md:p-8 lg:p-10">
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
         <div class="text-center">
@@ -229,47 +194,38 @@
                     <defs>
                         <linearGradient id="paint0_linear_11430_22515" x1="20.8102" y1="23.9532" x2="23.9577"
                                         y2="12.9901" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1724C9"/>
                             <stop offset="1" stop-color="#1C64F2"/>
                         </linearGradient>
                         <linearGradient id="paint1_linear_11430_22515" x1="28.0593" y1="10.5837" x2="19.7797"
                                         y2="2.33321" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1C64F2"/>
                             <stop offset="1" stop-color="#0092FF"/>
                         </linearGradient>
                         <linearGradient id="paint2_linear_11430_22515" x1="16.9145" y1="5.2045" x2="4.42432"
                                         y2="5.99375" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#0092FF"/>
                             <stop offset="1" stop-color="#45B2FF"/>
                         </linearGradient>
                         <linearGradient id="paint3_linear_11430_22515" x1="16.0698" y1="28.846" x2="27.2866"
                                         y2="25.8192" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1C64F2"/>
                             <stop offset="1" stop-color="#0092FF"/>
                         </linearGradient>
                         <linearGradient id="paint4_linear_11430_22515" x1="8.01881" y1="15.8661" x2="15.9825"
                                         y2="24.1181" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1724C9"/>
                             <stop offset="1" stop-color="#1C64F2"/>
                         </linearGradient>
                         <linearGradient id="paint5_linear_11430_22515" x1="26.2004" y1="21.8189" x2="31.7569"
                                         y2="10.6178" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#0092FF"/>
                             <stop offset="1" stop-color="#45B2FF"/>
                         </linearGradient>
                         <linearGradient id="paint6_linear_11430_22515" x1="6.11387" y1="9.31427" x2="3.14054"
                                         y2="20.4898" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1C64F2"/>
                             <stop offset="1" stop-color="#0092FF"/>
                         </linearGradient>
                         <linearGradient id="paint7_linear_11430_22515" x1="21.2932" y1="8.78271" x2="10.4278"
                                         y2="11.488" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#1724C9"/>
                             <stop offset="1" stop-color="#1C64F2"/>
                         </linearGradient>
                         <linearGradient id="paint8_linear_11430_22515" x1="7.15667" y1="21.5399" x2="14.0824"
                                         y2="31.9579" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#0092FF"/>
                             <stop offset="1" stop-color="#45B2FF"/>
                         </linearGradient>
                     </defs>

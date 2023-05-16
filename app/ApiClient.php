@@ -123,11 +123,14 @@ class ApiClient
 
     private function createPost(stdClass $post): Post
     {
+        $id = $post->userId;
+
         return new Post(
             $post->userId,
             $post->id,
             $post->title,
-            $post->body
+            $post->body,
+            $this->fetchUsersById($id)
         );
     }
 
