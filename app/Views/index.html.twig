@@ -45,7 +45,9 @@
                         </div>
                     </div>
                     <div class="mb-6 md:mb-0">
-                        <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        <a class="no-underline hover:underline text-black" href="post?id={{ post.postid }}">
+                            <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        </a>
                         <div class="mb-3 text-red-600 font-medium text-sm flex items-center justify-center md:justify-start">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
                                 <path fill="currentColor"
@@ -55,7 +57,7 @@
                         </div>
                         <p class="text-gray-500 mb-6">
                             <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
-                                <a href="user?id={{ post.userid }}"
+                                <a class="no-underline hover:underline text-black" href="user?id={{ post.userid }}"
                                    class="text-gray-900">{{ post.user.name }}</a></small>
                         </p>
                         <p class="text-gray-500">{{ post.body|capitalize }}</p>
@@ -79,7 +81,9 @@
                     </div>
 
                     <div class="mb-6 md:mb-0 md:order-1">
-                        <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        <a class="no-underline hover:underline text-black" href="post?id={{ post.postid }}">
+                            <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
+                        </a>
                         <div class="mb-3 text-yellow-500 font-medium text-sm flex items-center justify-center md:justify-start">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                                 <path fill="currentColor"
@@ -89,7 +93,7 @@
                         </div>
                         <p class="text-gray-500 mb-6">
                             <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
-                                <a href="user?id={{ post.userid }}"
+                                <a class="no-underline hover:underline text-black" href="user?id={{ post.userid }}"
                                    class="text-gray-900">{{ post.user.name }}</a></small>
                         </p>
                         <p class="text-gray-500">{{ post.body|capitalize }}</p>
