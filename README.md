@@ -1,6 +1,6 @@
 # NewsFeed
  
-
+Installation guide:
     1) Clone files from this project to your PC.
     2) Install composer with required packages.
     3) Add a folder called cache in the main project folder.
