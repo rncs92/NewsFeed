@@ -37,25 +37,25 @@ class ApiClient
         }
     }
 
-    public function fetchArticlesById(int $id): ?Article
+    public function fetchArticlesById(int $articleId): ?Article
     {
         try {
-            if (!Cache::check('posts_' . $id)) {
-                $response = $this->client->request('GET', self::BASIC_API_URL . "posts/$id");
+            if (!Cache::check('posts_' . $articleId)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "posts/$articleId");
                 $rawData = $response->getBody()->getContents();
-                Cache::set('posts_' . $id, $rawData);
+                Cache::set('posts_' . $articleId, $rawData);
             } else {
-                $rawData = Cache::get('posts_' . $id);
+                $rawData = Cache::get('posts_' . $articleId);
             }
             $post = json_decode($rawData);
 
-            return $this->createPost($post);
+            return $this->createArticle($post);
         } catch (GuzzleException $exception) {
             return null;
         }
     }
 
-    public function fetchPostsByUser(int $userId): array
+    public function fetchArticlesByUser(int $userId): array
     {
         try {
             if (!Cache::check('userPosts_' . $userId)) {
@@ -71,15 +71,15 @@ class ApiClient
         }
     }
 
-    public function fetchUsersById(int $id): ?User
+    public function fetchUsersById(int $userId): ?User
     {
         try {
-            if (!Cache::check('user_' . $id)) {
-                $response = $this->client->request('GET', self::BASIC_API_URL . "users/$id");
+            if (!Cache::check('user_' . $userId)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "users/$userId");
                 $rawData = $response->getBody()->getContents();
-                Cache::set('user_' . $id, $rawData);
+                Cache::set('user_' . $userId, $rawData);
             } else {
-                $rawData = Cache::get('user_' . $id);
+                $rawData = Cache::get('user_' . $userId);
             }
             $user = json_decode($rawData);
 
@@ -89,15 +89,15 @@ class ApiClient
         }
     }
 
-    private function getArticleComments(int $postId = 1): array
+    private function getArticleComments(int $articleId = 1): array
     {
         try {
-            if (!Cache::check('comments_' . $postId)) {
-                $response = $this->client->request('GET', self::BASIC_API_URL . "comments?postId=$postId");
+            if (!Cache::check('comments_' . $articleId)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "comments?postId=$articleId");
                 $rawData = $response->getBody()->getContents();
-                Cache::set('comments_' . $postId, $rawData);
+                Cache::set('comments_' . $articleId, $rawData);
             } else {
-                $rawData = Cache::get('comments_' . $postId);
+                $rawData = Cache::get('comments_' . $articleId);
             }
 
             return json_decode($rawData);
@@ -112,19 +112,19 @@ class ApiClient
 
         $postsCollection = [];
         foreach ($posts as $post) {
-            $postsCollection[] = $this->createPost($post);
+            $postsCollection[] = $this->createArticle($post);
         }
 
         return $postsCollection;
     }
 
-    public function createUserPostCollection($userId): array
+    public function createUserArticlesCollection($userId): array
     {
-        $userPosts = $this->fetchPostsByUser($userId);
+        $userPosts = $this->fetchArticlesByUser($userId);
 
         $userPostsCollection = [];
         foreach ($userPosts as $post) {
-            $userPostsCollection[] = $this->createPost($post);
+            $userPostsCollection[] = $this->createArticle($post);
         }
 
         return $userPostsCollection;
@@ -142,7 +142,7 @@ class ApiClient
         return $commentsCollection;
     }
 
-    private function createPost(stdClass $post): Article
+    private function createArticle(stdClass $post): Article
     {
         $id = $post->userId;
 

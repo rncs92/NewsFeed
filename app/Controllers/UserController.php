@@ -17,7 +17,7 @@ class UserController
     {
         $id = isset($vars['id']) ? (int)$vars['id'] : 1;
         $user = $this->client->fetchUsersById($id);
-        $userPosts = $this->client->createUserPostCollection($id);
+        $userPosts = $this->client->createUserArticlesCollection($id);
 
         return new TwigView('user', [
             'user' => $user,
