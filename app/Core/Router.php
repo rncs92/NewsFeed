@@ -1,6 +1,6 @@
 <?php
 
-namespace NewsFeed;
+namespace NewsFeed\Core;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use NewsFeed\Router;
+use NewsFeed\Core\Router;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 

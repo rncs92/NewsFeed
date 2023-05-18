@@ -1,11 +1,12 @@
 <?php
 
-use NewsFeed\Controllers\Controller;
+use NewsFeed\Controllers\ArticleController;
+use NewsFeed\Controllers\UserController;
 
 return [
-    ['GET', '/', [Controller::class, 'getPosts']],
-    ['GET', '/post', [Controller::class, 'viewPost']],
-    ['GET', '/post/{id:\d+}', [Controller::class, 'viewPost']],
-    ['GET', '/user', [Controller::class, 'getUsers']],
-    ['GET', '/user/{id:\d+}', [Controller::class, 'getUsers']],
+    ['GET', '/', [ArticleController::class, 'index']],
+    ['GET', '/post', [ArticleController::class, 'show']],
+    ['GET', '/post/{id:\d+}', [ArticleController::class, 'show']],
+    ['GET', '/user', [UserController::class, 'show']],
+    ['GET', '/user/{id:\d+}', [UserController::class, 'show']],
 ];

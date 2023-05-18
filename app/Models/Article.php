@@ -2,7 +2,7 @@
 
 namespace NewsFeed\Models;
 
-class Post
+class Article
 {
     private int $userID;
     private int $postID;

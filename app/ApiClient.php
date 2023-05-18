@@ -5,7 +5,7 @@ namespace NewsFeed;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use NewsFeed\Models\Comment;
-use NewsFeed\Models\Post;
+use NewsFeed\Models\Article;
 use NewsFeed\Models\User;
 use stdClass;
 
@@ -20,7 +20,7 @@ class ApiClient
         $this->client = new Client();
     }
 
-    private function fetchPosts(): array
+    private function fetchArticles(): array
     {
         try {
             if (!Cache::check('posts')) {
@@ -37,7 +37,7 @@ class ApiClient
         }
     }
 
-    public function fetchPostById(int $id): ?Post
+    public function fetchArticlesById(int $id): ?Article
     {
         try {
             if (!Cache::check('posts_' . $id)) {
@@ -84,12 +84,12 @@ class ApiClient
             $user = json_decode($rawData);
 
             return $this->createUser($user);
-        } catch (GuzzleException $excaption) {
+        } catch (GuzzleException $exception) {
             return null;
         }
     }
 
-    private function getPostComments(int $postId = 1): array
+    private function getArticleComments(int $postId = 1): array
     {
         try {
             if (!Cache::check('comments_' . $postId)) {
@@ -106,9 +106,9 @@ class ApiClient
         }
     }
 
-    public function createPostCollection(): array
+    public function createArticlesCollection(): array
     {
-        $posts = $this->fetchPosts();
+        $posts = $this->fetchArticles();
 
         $postsCollection = [];
         foreach ($posts as $post) {
@@ -132,7 +132,7 @@ class ApiClient
 
     public function createCommentsCollection(int $postId): array
     {
-        $comments = $this->getPostComments($postId);
+        $comments = $this->getArticleComments($postId);
 
         $commentsCollection = [];
         foreach ($comments as $comment) {
@@ -142,11 +142,11 @@ class ApiClient
         return $commentsCollection;
     }
 
-    private function createPost(stdClass $post): Post
+    private function createPost(stdClass $post): Article
     {
         $id = $post->userId;
 
-        return new Post(
+        return new Article(
             $post->userId,
             $post->id,
             $post->title,
