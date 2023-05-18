@@ -4,11 +4,21 @@ namespace NewsFeed\Controllers;
 
 use NewsFeed\Core\TwigView;
 use NewsFeed\Exceptions\ResourceNotFoundException;
+use NewsFeed\Services\User\IndexUserServices;
 use NewsFeed\Services\User\Show\ShowUserRequest;
 use NewsFeed\Services\User\Show\ShowUserService;
 
 class UserController
 {
+    public function index(): TwigView
+    {
+        $service = new IndexUserServices();
+        $users = $service->handle();
+
+        return new TwigView('users', [
+            'users' => $users,
+        ]);
+    }
     public function show(array $vars): TwigView
     {
         try {

@@ -37,6 +37,23 @@ class ApiClient
         }
     }
 
+    private function fetchUsers(): array
+    {
+        try {
+            if (!Cache::check('users')) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . 'users');
+                $rawData = $response->getBody()->getContents();
+                Cache::set('users', $rawData);
+            } else {
+                $rawData = Cache::get('users');
+            }
+
+            return json_decode($rawData);
+        } catch (GuzzleException $exception) {
+            return [];
+        }
+    }
+
     public function fetchArticlesById(int $articleId): ?Article
     {
         try {
@@ -116,6 +133,18 @@ class ApiClient
         }
 
         return $postsCollection;
+    }
+
+    public function createUsersCollection(): array
+    {
+        $users = $this->fetchUsers();
+
+        $usersCollection = [];
+        foreach ($users as $user) {
+            $usersCollection[] = $this->createUser($user);
+        }
+
+        return $usersCollection;
     }
 
     public function createUserArticlesCollection($userId): array
