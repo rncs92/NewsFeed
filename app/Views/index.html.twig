@@ -18,7 +18,7 @@
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost:8000/">
+            <a href="/">
                 <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-6 border border-gray-400 rounded shadow">
                     Home
                 </button>
@@ -38,14 +38,14 @@
                                 data-mdb-ripple="true" data-mdb-ripple-color="light">
                             <img src="https://placehold.co/600x400/brown/white?text=Article photo"
                                  class="w-full" alt="Placehold"/>
-                            <a href="post?id={{ post.postid }}">
+                            <a href="/post/{{ post.postid }}">
                                 <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
                                      style="background-color: rgba(251, 251, 251, 0.2)"></div>
                             </a>
                         </div>
                     </div>
                     <div class="mb-6 md:mb-0">
-                        <a class="no-underline hover:underline text-black" href="post?id={{ post.postid }}">
+                        <a class="no-underline hover:underline text-black" href="/post/{{ post.postid }}">
                             <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
                         </a>
                         <div class="mb-3 text-red-600 font-medium text-sm flex items-center justify-center md:justify-start">
@@ -57,7 +57,7 @@
                         </div>
                         <p class="text-gray-500 mb-6">
                             <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
-                                <a class="no-underline hover:underline text-black" href="user?id={{ post.userid }}"
+                                <a class="no-underline hover:underline text-black" href="/user/{{ post.userid }}"
                                    class="text-gray-900">{{ post.user.name }}</a></small>
                         </p>
                         <p class="text-gray-500">{{ post.body|capitalize }}</p>
@@ -73,7 +73,7 @@
                                 data-mdb-ripple="true" data-mdb-ripple-color="light">
                             <img src="https://placehold.co/600x400/grey/yellow?text=Article photo"
                                  class="w-full" alt="Louvre"/>
-                            <a href="post?id={{ post.postid }}">
+                            <a href="/post/{{ post.postid }}">
                                 <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
                                      style="background-color: rgba(251, 251, 251, 0.2)"></div>
                             </a>
@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="mb-6 md:mb-0 md:order-1">
-                        <a class="no-underline hover:underline text-black" href="post?id={{ post.postid }}">
+                        <a class="no-underline hover:underline text-black" href="/post/{{ post.postid }}">
                             <h3 class="text-2xl font-bold mb-3">{{ post.title|capitalize }}</h3>
                         </a>
                         <div class="mb-3 text-yellow-500 font-medium text-sm flex items-center justify-center md:justify-start">
@@ -93,7 +93,7 @@
                         </div>
                         <p class="text-gray-500 mb-6">
                             <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
-                                <a class="no-underline hover:underline text-black" href="user?id={{ post.userid }}"
+                                <a class="no-underline hover:underline text-black" href="/user/{{ post.userid }}"
                                    class="text-gray-900">{{ post.user.name }}</a></small>
                         </p>
                         <p class="text-gray-500">{{ post.body|capitalize }}</p>

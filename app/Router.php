@@ -32,6 +32,7 @@ class Router
             case Dispatcher::NOT_FOUND:
                 return null;
             case Dispatcher::METHOD_NOT_ALLOWED:
+                $allowedMethods = $routeInfo[1];
                 return null;
                 break;
             case Dispatcher::FOUND:
@@ -41,7 +42,7 @@ class Router
                 [$controllerName, $methodName] = $handler;
                 $controller = new $controllerName;
 
-                return $controller->{$methodName}();
+                return $controller->{$methodName}($vars);
         }
         return null;
     }

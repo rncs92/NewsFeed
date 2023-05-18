@@ -18,7 +18,7 @@
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost:8000/">
+            <a href="/">
                 <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-6 border border-gray-400 rounded shadow">
                     Home
                 </button>
@@ -104,7 +104,7 @@
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <a class="no-underline hover:underline text-black"
-                                       href="post?id={{ post.postid }}">{{ post.title|capitalize }}</a>
+                                       href="/post/{{ post.postid }}">{{ post.title|capitalize }}</a>
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ user.name }}

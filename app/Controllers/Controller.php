@@ -23,9 +23,9 @@ class Controller
         ]);
     }
 
-    public function viewPost(): TwigView
+    public function viewPost(array $vars): TwigView
     {
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+        $id = isset($vars['id']) ? (int)$vars['id'] : 1;
         $post = $this->client->fetchPostById($id);
         $comments = $this->client->createCommentsCollection($id);
 
@@ -35,9 +35,9 @@ class Controller
         ]);
     }
 
-    public function getUsers(): TwigView
+    public function getUsers(array $vars): TwigView
     {
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+        $id = isset($vars['id']) ? (int)$vars['id'] : 1;
         $user = $this->client->fetchUsersById($id);
         $userPosts = $this->client->createUserPostCollection($id);
 

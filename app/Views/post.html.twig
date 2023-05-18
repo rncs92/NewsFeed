@@ -18,7 +18,7 @@
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost:8000/">
+            <a href="/">
                 <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-6 border border-gray-400 rounded shadow">
                     Home
                 </button>
@@ -36,7 +36,7 @@
                         <img class="mr-4 w-16 h-16 rounded-full"
                              src="https://placehold.co/50x50?text=User" alt="User">
                         <div>
-                            <a href="user?id={{ post.userid }}" rel="author"
+                            <a href="/user/{{ post.userid }}" rel="author"
                                class="text-xl font-bold text-gray-900 dark:text-white">Author: {{ post.user.name }}</a>
                         </div>
                     </div>
@@ -100,65 +100,65 @@
         <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related articles</h2>
         <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
             <article class="max-w-xs">
-                <a href="http://localhost:8000/post?id=15">
+                <a href="/post/15">
                     <img src="https://placehold.co/600x400/gray/green?text=Post Image"
                          class="mb-5 rounded-lg" alt="Image 1">
                 </a>
                 <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                    <a href="http://localhost:8000/post?id=15">Eveniet quod temporibus</a>
+                    <a href="/post/15">Eveniet quod temporibus</a>
                 </h2>
                 <p class="mb-4 font-light text-gray-500 dark:text-gray-400">Reprehenderit quos placeat velit minima
                     officia dolores impedit repudiandae molestiae nam voluptas recusandae quis delectus officiis harum
                     fugiat vitae</p>
-                <a href="http://localhost:8000/post?id=15"
+                <a href="/post/15"
                    class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
                     Read
                 </a>
             </article>
             <article class="max-w-xs">
-                <a href="http://localhost:8000/post?id=43">
+                <a href="/post/43">
                     <img src="https://placehold.co/600x400/blue/yellow?text=Post Image"
                          class="mb-5 rounded-lg" alt="Image 2">
                 </a>
                 <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                    <a href="http://localhost:8000/post?id=43">Eligendi iste nostrum consequuntur adipisci praesentium
+                    <a href="/post/43">Eligendi iste nostrum consequuntur adipisci praesentium
                         sit beatae perferendis</a>
                 </h2>
                 <p class="mb-4 font-light text-gray-500 dark:text-gray-400">Similique fugit est illum et dolorum harum
                     et voluptate eaque quidem exercitationem quos nam commodi possimus cum odio nihil nulla dolorum
                     exercitationem magnam ex et a et distinctio debitis</p>
-                <a href="http://localhost:8000/post?id=43"
+                <a href="/post/43"
                    class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
                     Read
                 </a>
             </article>
             <article class="max-w-xs">
-                <a href="http://localhost:8000/post?id=27">
+                <a href="/post/27">
                     <img src="https://placehold.co/600x400/red/white?text=Post Image"
                          class="mb-5 rounded-lg" alt="Image 3">
                 </a>
                 <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                    <a href="http://localhost:8000/post?id=27">Quasi id et eos tenetur aut quo autem</a>
+                    <a href="/post/27">Quasi id et eos tenetur aut quo autem</a>
                 </h2>
                 <p class="mb-4 font-light text-gray-500 dark:text-gray-400">Eum sed dolores ipsam sint possimus debitis
                     occaecati debitis qui qui et ut placeat enim earum aut odit facilis consequatur suscipit
                     necessitatibus rerum sed inventore temporibus consequatur</p>
-                <a href="http://localhost:8000/post?id=27"
+                <a href="/post/27"
                    class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
                     Read
                 </a>
             </article>
             <article class="max-w-xs">
-                <a href="http://localhost:8000/post?id=92">
+                <a href="/post/92">
                     <img src="https://placehold.co/600x400/orange/white?text=Post Image"
                          class="mb-5 rounded-lg" alt="Image 4">
                 </a>
                 <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                    <a href="http://localhost:8000/post?id=92">Ratione ex tenetur perferendis</a>
+                    <a href="/post/92">Ratione ex tenetur perferendis</a>
                 </h2>
                 <p class="mb-4 font-light text-gray-500 dark:text-gray-400">Aut et excepturi dicta laudantium sint rerum
                     nihil laudantium et at a neque minima officia et similique libero et commodi voluptate qui</p>
-                <a href="http://localhost:8000/post?id=92"
+                <a href="/post/92"
                    class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
                     Read
                 </a>
