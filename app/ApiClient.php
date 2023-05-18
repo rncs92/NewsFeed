@@ -3,6 +3,7 @@
 namespace NewsFeed;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use NewsFeed\Models\Comment;
 use NewsFeed\Models\Post;
 use NewsFeed\Models\User;
@@ -21,68 +22,88 @@ class ApiClient
 
     private function fetchPosts(): array
     {
-        if (!Cache::check('posts')) {
-            $response = $this->client->request('GET', self::BASIC_API_URL . 'posts');
-            $rawData = $response->getBody()->getContents();
-            Cache::set('posts', $rawData);
-        } else {
-            $rawData = Cache::get('posts');
-        }
+        try {
+            if (!Cache::check('posts')) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . 'posts');
+                $rawData = $response->getBody()->getContents();
+                Cache::set('posts', $rawData);
+            } else {
+                $rawData = Cache::get('posts');
+            }
 
-        return json_decode($rawData);
+            return json_decode($rawData);
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
-    public function fetchPostById(int $id): Post
+    public function fetchPostById(int $id): ?Post
     {
-        if (!Cache::check('posts_' . $id)) {
-            $response = $this->client->request('GET', self::BASIC_API_URL . "posts/$id");
-            $rawData = $response->getBody()->getContents();
-            Cache::set('posts_' . $id, $rawData);
-        } else {
-            $rawData = Cache::get('posts_' . $id);
-        }
-        $post = json_decode($rawData);
+        try {
+            if (!Cache::check('posts_' . $id)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "posts/$id");
+                $rawData = $response->getBody()->getContents();
+                Cache::set('posts_' . $id, $rawData);
+            } else {
+                $rawData = Cache::get('posts_' . $id);
+            }
+            $post = json_decode($rawData);
 
-        return $this->createPost($post);
+            return $this->createPost($post);
+        } catch (GuzzleException $exception) {
+            return null;
+        }
     }
 
     public function fetchPostsByUser(int $userId): array
     {
-        if (!Cache::check('userPosts_' . $userId)) {
-            $response = $this->client->request('GET', self::BASIC_API_URL . "posts?userId=$userId");
-            $rawData = $response->getBody()->getContents();
-            Cache::set('userPosts_' . $userId, $rawData);
-        } else {
-            $rawData = Cache::get('userPosts_' . $userId);
+        try {
+            if (!Cache::check('userPosts_' . $userId)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "posts?userId=$userId");
+                $rawData = $response->getBody()->getContents();
+                Cache::set('userPosts_' . $userId, $rawData);
+            } else {
+                $rawData = Cache::get('userPosts_' . $userId);
+            }
+            return json_decode($rawData);
+        } catch (GuzzleException $exception) {
+            return [];
         }
-        return json_decode($rawData);
     }
 
-    public function fetchUsersById(int $id): User
+    public function fetchUsersById(int $id): ?User
     {
-        if (!Cache::check('user_' . $id)) {
-            $response = $this->client->request('GET', self::BASIC_API_URL . "users/$id");
-            $rawData = $response->getBody()->getContents();
-            Cache::set('user_' . $id, $rawData);
-        } else {
-            $rawData = Cache::get('user_' . $id);
-        }
-        $user = json_decode($rawData);
+        try {
+            if (!Cache::check('user_' . $id)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "users/$id");
+                $rawData = $response->getBody()->getContents();
+                Cache::set('user_' . $id, $rawData);
+            } else {
+                $rawData = Cache::get('user_' . $id);
+            }
+            $user = json_decode($rawData);
 
-        return $this->createUser($user);
+            return $this->createUser($user);
+        } catch (GuzzleException $excaption) {
+            return null;
+        }
     }
 
     private function getPostComments(int $postId = 1): array
     {
-        if (!Cache::check('comments_' . $postId)) {
-            $response = $this->client->request('GET', self::BASIC_API_URL . "comments?postId=$postId");
-            $rawData = $response->getBody()->getContents();
-            Cache::set('comments_' . $postId, $rawData);
-        } else {
-            $rawData = Cache::get('comments_' . $postId);
-        }
+        try {
+            if (!Cache::check('comments_' . $postId)) {
+                $response = $this->client->request('GET', self::BASIC_API_URL . "comments?postId=$postId");
+                $rawData = $response->getBody()->getContents();
+                Cache::set('comments_' . $postId, $rawData);
+            } else {
+                $rawData = Cache::get('comments_' . $postId);
+            }
 
-        return json_decode($rawData);
+            return json_decode($rawData);
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
     public function createPostCollection(): array
