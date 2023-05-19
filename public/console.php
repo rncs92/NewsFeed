@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use NewsFeed\Application;
 use NewsFeed\Models\Article;
 use NewsFeed\Models\Comment;
 use NewsFeed\Models\User;
@@ -11,6 +12,10 @@ use NewsFeed\Services\User\Show\ShowUserRequest;
 use NewsFeed\Services\User\Show\ShowUserService;
 
 require_once '../vendor/autoload.php';
+
+$app = new Application();
+$app->run();
+
 
 $resource = $argv[1] ?? null;
 $id = $argv[2] ?? null;
@@ -30,7 +35,7 @@ switch ($resource) {
             echo 'COMMENTS:' . PHP_EOL;
             foreach ($comments as $comment) {
                 /** @var Comment $comment */
-                echo '● Name: ' . $comment->getName() . ' | Email: ' . $comment->getEmail() . PHP_EOL;
+                echo '● [Name:] ' . $comment->getName() . ' | [Email:] ' . $comment->getEmail() . PHP_EOL;
                 echo $comment->getBody() . PHP_EOL;
                 echo PHP_EOL;
             }
