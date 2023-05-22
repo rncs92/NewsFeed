@@ -8,16 +8,15 @@ class Article
     private int $postID;
     private string $title;
     private string $body;
-    private User $user;
+    private ?User $user = null;
 
-    public function __construct(int $userID, int $postID, string $title, string $body, User $user)
+    public function __construct(int $userID, int $postID, string $title, string $body)
     {
 
         $this->userID = $userID;
         $this->postID = $postID;
         $this->title = $title;
         $this->body = $body;
-        $this->user = $user;
     }
 
     public function getUserID(): int
@@ -40,8 +39,13 @@ class Article
         return $this->body;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }

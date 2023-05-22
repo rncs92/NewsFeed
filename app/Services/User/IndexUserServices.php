@@ -2,22 +2,24 @@
 
 namespace NewsFeed\Services\User;
 
-use NewsFeed\ApiClient;
+
 use NewsFeed\Exceptions\ResourceNotFoundException;
+use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
+use NewsFeed\Repository\User\UserRepository;
 
 class IndexUserServices
 {
-    private ApiClient $client;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
-        $this->client = new ApiClient();
+        $this->userRepository = new JsonPlaceholderUserRepository();
     }
 
     public function handle(): array
     {
         try {
-            return $this->client->createUsersCollection();
+            return $this->userRepository->createCollection();
         } catch (ResourceNotFoundException $exception) {
             return [];
         }
