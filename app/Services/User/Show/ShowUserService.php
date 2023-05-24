@@ -6,8 +6,6 @@ namespace NewsFeed\Services\User\Show;
 use NewsFeed\Exceptions\ResourceNotFoundException;
 use NewsFeed\Models\Article;
 use NewsFeed\Repository\Article\ArticleRepository;
-use NewsFeed\Repository\Article\JsonPlaceholderArticleRepository;
-use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
 use NewsFeed\Repository\User\UserRepository;
 
 class ShowUserService
@@ -15,10 +13,10 @@ class ShowUserService
     private UserRepository $userRepository;
     private ArticleRepository $articleRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository, ArticleRepository $articleRepository)
     {
-        $this->userRepository = new JsonPlaceholderUserRepository();
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
+        $this->userRepository = $userRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     public function handle(ShowUserRequest $request): ShowUserResponse

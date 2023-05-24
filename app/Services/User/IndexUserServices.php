@@ -4,16 +4,15 @@ namespace NewsFeed\Services\User;
 
 
 use NewsFeed\Exceptions\ResourceNotFoundException;
-use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
 use NewsFeed\Repository\User\UserRepository;
 
 class IndexUserServices
 {
     private UserRepository $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->userRepository = new JsonPlaceholderUserRepository();
+        $this->userRepository = $userRepository;
     }
 
     public function handle(): array

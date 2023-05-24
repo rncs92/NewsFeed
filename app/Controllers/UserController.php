@@ -10,21 +10,29 @@ use NewsFeed\Services\User\Show\ShowUserService;
 
 class UserController
 {
+    private IndexUserServices $userServices;
+    private ShowUserService $showUserService;
+
+    public function __construct(IndexUserServices $userServices, ShowUserService $showUserService)
+    {
+        $this->userServices = $userServices;
+        $this->showUserService = $showUserService;
+    }
+
     public function index(): TwigView
     {
-        $service = new IndexUserServices();
-        $users = $service->handle();
+        $users = $this->userServices->handle();
 
         return new TwigView('users', [
             'users' => $users,
         ]);
     }
+
     public function show(array $vars): TwigView
     {
         try {
             $userId = isset($vars['id']) ? (int)$vars['id'] : 1;
-            $service = new ShowUserService();
-            $response = $service->handle(new ShowUserRequest($userId));
+            $response = $this->showUserService->handle(new ShowUserRequest($userId));
 
             return new TwigView('user', [
                 'user' => $response->getUser(),

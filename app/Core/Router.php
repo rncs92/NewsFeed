@@ -2,14 +2,31 @@
 
 namespace NewsFeed\Core;
 
+use DI\ContainerBuilder;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use NewsFeed\Repository\Article\ArticleRepository;
+use NewsFeed\Repository\Article\JsonPlaceholderArticleRepository;
+use NewsFeed\Repository\Comment\CommentRepository;
+use NewsFeed\Repository\Comment\JsonPlaceholderCommentRepository;
+use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
+use NewsFeed\Repository\User\UserRepository;
 use function FastRoute\simpleDispatcher;
+
 
 class Router
 {
     public static function response(array $routes): ?TwigView
     {
+
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions([
+            ArticleRepository::class => new JsonPlaceholderArticleRepository(),
+            UserRepository::class => new JsonPlaceholderUserRepository(),
+            CommentRepository::class => new JsonPlaceholderCommentRepository()
+        ]);
+        $container = $builder->build();
+
         $dispatcher = simpleDispatcher(function (RouteCollector $router) use ($routes) {
             foreach ($routes as $route) {
                 [$httpMethod, $url, $handler] = $route;
@@ -40,7 +57,7 @@ class Router
                 $vars = $routeInfo[2];
 
                 [$controllerName, $methodName] = $handler;
-                $controller = new $controllerName;
+                $controller = $container->get($controllerName);
 
                 return $controller->{$methodName}($vars);
         }

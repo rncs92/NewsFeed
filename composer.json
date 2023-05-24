@@ -17,6 +17,9 @@
         "twig/twig": "^3.0",
         "nesbot/carbon": "^2.66",
       "ext-json": "*",
-      "ext-readline": "*"
+      "ext-readline": "*",
+        "php-di/php-di": "^6.4",
+        "psr/container": "^1.1",
+        "vlucas/phpdotenv": "^5.5"
     }
 }

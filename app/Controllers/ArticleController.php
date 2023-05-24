@@ -10,10 +10,18 @@ use NewsFeed\Services\Article\Show\ShowArticleServices;
 
 class ArticleController
 {
+    private IndexArticleServices $indexArticleServices;
+    private ShowArticleServices $showArticleServices;
+
+    public function __construct(IndexArticleServices $indexArticleServices, ShowArticleServices $showArticleServices)
+    {
+        $this->indexArticleServices = $indexArticleServices;
+        $this->showArticleServices = $showArticleServices;
+    }
+
     public function index(): TwigView
     {
-        $service = new IndexArticleServices();
-        $articles = $service->handle();
+        $articles = $this->indexArticleServices->handle();
 
         return new TwigView('index', [
             'posts' => $articles,
@@ -24,9 +32,8 @@ class ArticleController
     {
         try {
             $articleId = $vars['id'] ?? 1;
-            $service = new ShowArticleServices();
-            $response = $service->handle(new ShowArticleRequest((int)$articleId));
-
+            $articleRequest = new ShowArticleRequest((int)$articleId);
+            $response = $this->showArticleServices->handle($articleRequest);
 
             return new TwigView('post', [
                 'post' => $response->getArticle(),

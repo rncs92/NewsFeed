@@ -5,8 +5,6 @@ namespace NewsFeed\Services\Article;
 use NewsFeed\Exceptions\ResourceNotFoundException;
 use NewsFeed\Models\Article;
 use NewsFeed\Repository\Article\ArticleRepository;
-use NewsFeed\Repository\Article\JsonPlaceholderArticleRepository;
-use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
 use NewsFeed\Repository\User\UserRepository;
 
 class IndexArticleServices
@@ -14,19 +12,19 @@ class IndexArticleServices
     private ArticleRepository $articleRepository;
     private UserRepository $userRepository;
 
-    public function __construct()
+    public function __construct(ArticleRepository $articleRepository, UserRepository $userRepository)
     {
-        $this->articleRepository = new JsonPlaceholderArticleRepository();
-        $this->userRepository = new JsonPlaceholderUserRepository();
+        $this->articleRepository = $articleRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function handle(): array
     {
         try {
-            $articles =  $this->articleRepository->createCollection();
+            $articles = $this->articleRepository->createCollection();
 
 
-            foreach($articles as $article) {
+            foreach ($articles as $article) {
                 /** @var Article $article */
                 $article->setUser($this->userRepository->byId($article->getUserID()));
             }
