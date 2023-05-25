@@ -7,6 +7,9 @@ use Twig\Loader\FilesystemLoader;
 
 require_once '../vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable('../');
+$dotenv->load();
+
 $loader = new FilesystemLoader('../app/Views');
 $twig = new Environment($loader);
 

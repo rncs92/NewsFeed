@@ -20,6 +20,7 @@
       "ext-readline": "*",
         "php-di/php-di": "^6.4",
         "psr/container": "^1.1",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "doctrine/dbal": "^3.6"
     }
 }
