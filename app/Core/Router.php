@@ -7,6 +7,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use NewsFeed\Repository\Article\ArticleRepository;
 use NewsFeed\Repository\Article\JsonPlaceholderArticleRepository;
+use NewsFeed\Repository\Article\PDOArticleRepository;
 use NewsFeed\Repository\Comment\CommentRepository;
 use NewsFeed\Repository\Comment\JsonPlaceholderCommentRepository;
 use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
@@ -21,7 +22,7 @@ class Router
 
         $builder = new ContainerBuilder();
         $builder->addDefinitions([
-            ArticleRepository::class => new JsonPlaceholderArticleRepository(),
+            ArticleRepository::class => new PDOArticleRepository(),
             UserRepository::class => new JsonPlaceholderUserRepository(),
             CommentRepository::class => new JsonPlaceholderCommentRepository()
         ]);
