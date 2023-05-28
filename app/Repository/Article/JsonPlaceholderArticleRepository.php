@@ -2,6 +2,7 @@
 
 namespace NewsFeed\Repository\Article;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use NewsFeed\Cache;
@@ -98,5 +99,13 @@ class JsonPlaceholderArticleRepository implements ArticleRepository
             $post->title,
             $post->body,
         );
+    }
+
+    public function save(Article $article): void
+    {
+    }
+
+    public function edit(Article $article): void
+    {
     }
 }

@@ -32,7 +32,7 @@
                 class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
             <header class="mb-4 lg:mb-6 not-format">
                 <!-- component -->
-                <form method="post" action="/create">
+                <form method="post" action="/post/{{ post.postid }}">
                     <div class="heading text-center font-bold text-2xl m-5 text-gray-800">Edit article</div>
                     <style>
                         body {
@@ -42,20 +42,22 @@
                     <div class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                         <label for="author">Article author</label><input type="number" id="author" name="author"
                                                                          class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-                                                                         placeholder="Author ID:" max="10" min="1" required>
-                        <label for="title">Article title</label><input id="title" name="title"
+                                                                         value="{{ post.userid }}" max="10" min="1" required>
+                        <label for="title">Article title</label><input  id="title" name="title"
                                                                        class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-                                                                       placeholder="Article title" required>
+                                                                       value="{{ post.title }}" required>
                         <label for="body">Article body</label><input id="body" name="body"
                                                                      class="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
-                                                                     placeholder="Write your article here" required>
+                                                                     value="{{ post.body }}" required>
                         <div class="icons flex text-gray-500 m-2">
                             <div class="count ml-auto text-gray-400 text-xs font-semibold">0/2500</div>
                         </div>
                         <!-- buttons -->
                         <div class="buttons flex">
                             <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
-                                <button type="reset" name="cancel">Cancel</button>
+                                <a href="/">
+                                <button type="button" name="cancel">Cancel</button>
+                                </a>
                             </div>
                             <div class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
                                 <button type="submit" name="submit">Submit</button>

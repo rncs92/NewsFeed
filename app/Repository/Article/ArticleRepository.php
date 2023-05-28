@@ -13,7 +13,8 @@ interface ArticleRepository
 
     public function createUserArticleCollection(int $userId): array;
 
-    public function create(int $author, string $title, string $body, Carbon $createdAt): string;
-    public function update(int $author, string $title, string $body, Carbon $createdAt): string;
-    public function delete(int $author): string;
+    public function save(Article $article): void;
+
+    public function edit(Article $article): void;
+
 }

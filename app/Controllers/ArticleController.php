@@ -4,8 +4,11 @@ namespace NewsFeed\Controllers;
 
 use NewsFeed\Core\TwigView;
 use NewsFeed\Exceptions\ResourceNotFoundException;
+use NewsFeed\Services\Article\Create\CreatePDOArticleRequest;
+use NewsFeed\Services\Article\Create\CreatePDOArticleService;
+use NewsFeed\Services\Article\Edit\EditPDOArticleRequest;
+use NewsFeed\Services\Article\Edit\EditPDOArticleServices;
 use NewsFeed\Services\Article\IndexArticleServices;
-use NewsFeed\Services\Article\PDOArticleServices;
 use NewsFeed\Services\Article\Show\ShowArticleRequest;
 use NewsFeed\Services\Article\Show\ShowArticleServices;
 
@@ -13,17 +16,21 @@ class ArticleController
 {
     private IndexArticleServices $indexArticleServices;
     private ShowArticleServices $showArticleServices;
-    private PDOArticleServices $PDOArticleServices;
+    private CreatePDOArticleService $createPDOArticleService;
+    private EditPDOArticleServices $editPDOArticleServices;
+
 
     public function __construct(
-        IndexArticleServices $indexArticleServices,
-        ShowArticleServices  $showArticleServices,
-        PDOArticleServices $pdoArticleServices
+        IndexArticleServices    $indexArticleServices,
+        ShowArticleServices     $showArticleServices,
+        CreatePDOArticleService $createPDOArticleService,
+        EditPDOArticleServices  $editPDOArticleServices
     )
     {
         $this->indexArticleServices = $indexArticleServices;
         $this->showArticleServices = $showArticleServices;
-        $this->PDOArticleServices = $pdoArticleServices;
+        $this->createPDOArticleService = $createPDOArticleService;
+        $this->editPDOArticleServices = $editPDOArticleServices;
     }
 
     public function index(): TwigView
@@ -51,48 +58,59 @@ class ArticleController
         }
     }
 
-    public function edit(): TwigView
-    {
-        try {
-            $articleId = $vars['id'] ?? 1;
-            $articleRequest = new ShowArticleRequest((int)$articleId);
-            $response = $this->showArticleServices->handle($articleRequest);
-
-            $this->PDOArticleServices->handleFormUpdate();
-
-            return new TwigView('edit', [
-                'post' => $response->getArticle()
-            ]);
-        } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notfound', []);
-        }
-    }
-
     public function create(): TwigView
     {
+        return new TwigView('Articles/create', []);
+    }
+
+    public function store()
+    {
         try {
+            $createArticle = $this->createPDOArticleService->handle(
+                new CreatePDOArticleRequest(
+                    (int)$_POST['author'],
+                    $_POST['title'],
+                    $_POST['body'],
+                )
+            );
 
-            $this->PDOArticleServices->handleFormSubmission();
+            header("Location: /");
+            return $createArticle->getArticle();
+        } catch (\Exception $exception) {
 
-            return new TwigView('createArticle', [
-
-            ]);
-        } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notfound', []);
         }
     }
 
-    public function delete(): TwigView
+    public function editView(array $vars): TwigView
+    {
+        $articleId = $vars['id'] ?? 1;
+        $articleRequest = new ShowArticleRequest((int)$articleId);
+        $response = $this->showArticleServices->handle($articleRequest);
+
+        return new TwigView('Articles/edit', [
+            'post' => $response->getArticle()
+        ]);
+    }
+
+    public function edit(array $vars)
     {
         try {
-            $articleId = $vars['id'] ?? 1;
-            $this->PDOArticleServices->handleFormDelete($articleId);
+            $id = $vars['id'] ?? 1;
 
-            return new TwigView('edit', [
+            $article = $this->editPDOArticleServices->handle(
+                new EditPDOArticleRequest(
+                    (int)$_POST['author'],
+                    $_POST['title'],
+                    $_POST['body'],
+                    (int)$id
+                )
+            );
 
-            ]);
-        } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notfound', []);
+
+            header('Location: /post/' . $article->getArticle()->getPostID());
+            return $article;
+        } catch (\Exception $exception) {
+
         }
     }
 }

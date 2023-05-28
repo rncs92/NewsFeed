@@ -61,7 +61,7 @@
                             News
                         </div>
                         <p class="text-gray-500 mb-6">
-                            <small>Published <u>{{ random(+'now'|date('U'))|date('Y-m-d') }}</u> by
+                            <small>Published <u>{{ post.createdat }}</u> by
                                 <a class="no-underline hover:underline text-black" href="/user/{{ post.userid }}"
                                    class="text-gray-900">{{ post.user.name }}</a></small>
                         </p>

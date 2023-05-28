@@ -2,21 +2,26 @@
 
 namespace NewsFeed\Models;
 
+use Carbon\Carbon;
+
 class Article
 {
     private int $userID;
-    private int $postID;
     private string $title;
     private string $body;
     private ?User $user = null;
+    private string $createdAt;
 
-    public function __construct(int $userID, int $postID, string $title, string $body)
+    private ?int $postID;
+
+    public function __construct(int $userID, string $title, string $body, string $createdAt = null, int $postID = null)
     {
 
         $this->userID = $userID;
-        $this->postID = $postID;
         $this->title = $title;
         $this->body = $body;
+        $this->createdAt = $createdAt ?? Carbon::now()->toAtomString();
+        $this->postID = $postID;
     }
 
     public function getUserID(): int
@@ -24,7 +29,7 @@ class Article
         return $this->userID;
     }
 
-    public function getPostID(): int
+    public function getPostID(): ?int
     {
         return $this->postID;
     }
@@ -47,5 +52,15 @@ class Article
     public function setUser(?User $user): void
     {
         $this->user = $user;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
+
+    public function setPostID(?int $postID): void
+    {
+        $this->postID = $postID;
     }
 }

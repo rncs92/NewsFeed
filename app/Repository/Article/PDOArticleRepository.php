@@ -2,143 +2,113 @@
 
 namespace NewsFeed\Repository\Article;
 
-use Carbon\Carbon;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Query\QueryBuilder;
+use NewsFeed\Core\Database;
 use NewsFeed\Models\Article;
+
 
 class PDOArticleRepository implements ArticleRepository
 {
-    private string $dbname;
-    private string $user;
-    private string $password;
-    private string $host;
+    private QueryBuilder $queryBuilder;
+    private Connection $connection;
 
     public function __construct()
     {
-        $this->dbname = $_ENV['DBNAME'];
-        $this->user = $_ENV['USER'];
-        $this->password = $_ENV['PASSWORD'];
-        $this->host = $_ENV['HOST'];
-    }
-
-    public function connect(): ?Connection
-    {
-        try {
-            $connectionParams = [
-                'dbname' => $this->dbname,
-                'user' => $this->user,
-                'password' => $this->password,
-                'host' => $this->host,
-                'driver' => 'pdo_mysql',
-            ];
-            return DriverManager::getConnection($connectionParams);
-        } catch (Exception $exception) {
-            return null;
-        }
+        $this->connection = Database::getConnection();
+        $this->queryBuilder = $this->connection->createQueryBuilder();
     }
 
     public function fetchById(int $articleId): ?Article
     {
-        $articles = $this->createCollection();
-        foreach ($articles as $article) {
-            /** @var Article $article */
-            if ($article->getPostID() == $articleId) {
-                return $article;
-            }
-        }
-        return $article;
+        $queryBuilder = $this->queryBuilder;
+        $article = $queryBuilder->select('*')
+            ->from('Articles')
+            ->where('id = ?')
+            ->setParameter(0, $articleId)
+            ->fetchAssociative();
+
+
+        return $this->buildModel($article);
     }
 
     public function createCollection(): array
     {
-        $sql = $this->connect();
-        $query = 'SELECT * FROM NewsFeed.Articles';
-        $response = $sql->fetchAllAssociative($query);
+        $queryBuilder = $this->queryBuilder;
+        $articles = $queryBuilder->select('*')
+            ->from('Articles')
+            ->fetchAllAssociative();
 
-        $articles = [];
-        foreach ($response as $article) {
-            $articles[] = $this->buildModel($article);
+        $articleCollection = [];
+        foreach ($articles as $article) {
+            $articleCollection [] = $this->buildModel($article);
         }
-        return $articles;
+        return $articleCollection;
     }
 
     public function createUserArticleCollection(int $userId): array
     {
-        $collection = $this->createCollection();
+        $queryBuilder = $this->queryBuilder;
+        $collection = $queryBuilder->select('*')
+            ->from('Articles')
+            ->where('user_id = ?')
+            ->setParameter(0, $userId)
+            ->fetchAllAssociative();
+
         $articles = [];
-        foreach ($collection as $article) {
-            /** @var Article $article */
-            if ($article->getUserID() == $userId) {
-                $articles[] = $article;
-            }
+        foreach($collection as $article) {
+            $articles[] = $this->buildModel($article);
         }
+
         return $articles;
     }
 
-    public function create(int $author, string $title, string $body, Carbon $createdAt): string
+    public function save(Article $article): void
     {
-        try {
-            $data = [
-                'user_id' => $author,
-                'title' => $title,
-                'body' => $body,
-                'created_at' => Carbon::now()
-            ];
+        $queryBuilder = $this->queryBuilder;
+        $queryBuilder
+            ->insert('Articles')
+            ->values(
+                [
+                    'user_id' => '?',
+                    'title' => '?',
+                    'body' => '?',
+                    'created_at' => '?'
+                ]
+            )
+            ->setParameter(0, $article->getUserID())
+            ->setParameter(1, $article->getTitle())
+            ->setParameter(2, $article->getBody())
+            ->setParameter(3, $article->getCreatedAt());
 
-            $connection = $this->connect();
+        $queryBuilder->executeQuery();
 
-                return $connection->insert('NewsFeed.Articles', $data);
-            } catch (\Exception $exception) {
-                return 'Failed: ' . $exception->getMessage();
-            }
+        $article->setPostID((int)$this->connection->lastInsertId());
     }
 
-    public function update(int $author, string $title, string $body, Carbon $createdAt): string
+    public function edit(Article $article): void
     {
-        try {
-            $data = [
-                'user_id' => $author,
-                'title' => $title,
-                'body' => $body,
-                'created_at' => Carbon::now()
-            ];
+        $queryBuilder = $this->queryBuilder;
+        $queryBuilder
+            ->update('Articles')
+            ->set('title', '?')
+            ->set('body', '?')
+            ->where('id = :id')
+            ->setParameter(0, $article->getTitle())
+            ->setParameter(1, $article->getBody())
+            ->setParameter('id', $article->getPostID());
 
-            $criteria = [
-                'user_id' => $author
-            ];
-
-            $connection = $this->connect();
-
-            return $connection->update('NewsFeed.Articles', $data, $criteria);
-        } catch (\Exception $exception) {
-            return 'Failed: ' . $exception->getMessage();
-        }
-    }
-
-    public function delete(int $author): string
-    {
-        try {
-            $criteria = [
-                'user_id' => $author
-            ];
-
-            $connection = $this->connect();
-
-            return $connection->delete('NewsFeed.Articles', $criteria);
-        } catch (\Exception $exception) {
-            return 'Failed: ' . $exception->getMessage();
-        }
+        $queryBuilder->executeQuery();
     }
 
     private function buildModel($article): Article
     {
         return new Article(
-            $article['user_id'],
-            $article['id'],
+            (int)$article['user_id'],
             $article['title'],
             $article['body'],
+            $article['created_at'],
+            (int)$article['id']
         );
     }
 }
