@@ -86,17 +86,19 @@ class PDOArticleRepository implements ArticleRepository
         $article->setPostID((int)$this->connection->lastInsertId());
     }
 
-    public function edit(Article $article): void
+    public function update(Article $article): void
     {
         $queryBuilder = $this->queryBuilder;
         $queryBuilder
             ->update('Articles')
+            ->set('user_id', '?')
             ->set('title', '?')
             ->set('body', '?')
-            ->where('id = :id')
-            ->setParameter(0, $article->getTitle())
-            ->setParameter(1, $article->getBody())
-            ->setParameter('id', $article->getPostID());
+            ->where('id = ?')
+            ->setParameter(0, $article->getUserID())
+            ->setParameter(1, $article->getTitle())
+            ->setParameter(2, $article->getBody())
+            ->setParameter(3, $article->getPostID());
 
         $queryBuilder->executeQuery();
     }

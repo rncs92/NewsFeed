@@ -2,8 +2,6 @@
 
 namespace NewsFeed\Services\Article\Edit;
 
-use Carbon\Carbon;
-use NewsFeed\Models\Article;
 use NewsFeed\Repository\Article\ArticleRepository;
 
 class EditPDOArticleServices
@@ -17,14 +15,17 @@ class EditPDOArticleServices
 
     public function handle(EditPDOArticleRequest $request): EditPDOArticleResponse
     {
-        $article = new Article(
-            $request->getUserId(),
-            $request->getTitle(),
-            $request->getBody(),
-            Carbon::now()->toAtomString()
-        );
+        $article = $this->articleRepository->fetchById($request->getPostId());
 
-        $this->articleRepository->save($article);
+
+        $article->edit([
+            'user_id' => $request->getUserId(),
+            'title' => $request->getTitle(),
+            'body' => $request->getBody(),
+            'id' => $request->getPostId()
+        ]);
+
+        $this->articleRepository->update($article);
 
         return new EditPDOArticleResponse($article);
     }

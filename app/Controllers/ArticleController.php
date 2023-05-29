@@ -4,6 +4,7 @@ namespace NewsFeed\Controllers;
 
 use NewsFeed\Core\TwigView;
 use NewsFeed\Exceptions\ResourceNotFoundException;
+use NewsFeed\Models\Article;
 use NewsFeed\Services\Article\Create\CreatePDOArticleRequest;
 use NewsFeed\Services\Article\Create\CreatePDOArticleService;
 use NewsFeed\Services\Article\Edit\EditPDOArticleRequest;
@@ -63,7 +64,7 @@ class ArticleController
         return new TwigView('Articles/create', []);
     }
 
-    public function store()
+    public function store(): ?Article
     {
         try {
             $createArticle = $this->createPDOArticleService->handle(
@@ -77,38 +78,42 @@ class ArticleController
             header("Location: /");
             return $createArticle->getArticle();
         } catch (\Exception $exception) {
-
+            return null;
         }
     }
 
-    public function editView(array $vars): TwigView
-    {
-        $articleId = $vars['id'] ?? 1;
-        $articleRequest = new ShowArticleRequest((int)$articleId);
-        $response = $this->showArticleServices->handle($articleRequest);
-
-        return new TwigView('Articles/edit', [
-            'post' => $response->getArticle()
-        ]);
-    }
-
-    public function edit(array $vars)
+    public function update(array $vars): TwigView
     {
         try {
-            $id = $vars['id'] ?? 1;
+            $articleId = $vars['id'];
+            $articleRequest = new ShowArticleRequest((int)$articleId);
+            $response = $this->showArticleServices->handle($articleRequest);
 
-            $article = $this->editPDOArticleServices->handle(
+            return new TwigView('Articles/edit', [
+                'post' => $response->getArticle()
+            ]);
+        } catch (ResourceNotFoundException $exception) {
+            return new TwigView('notfound', []);
+        }
+    }
+
+    public function edit(array $vars): void
+    {
+        try {
+            $id = (int)$vars['id'];
+
+            $updateArticle = $this->editPDOArticleServices->handle(
                 new EditPDOArticleRequest(
                     (int)$_POST['author'],
                     $_POST['title'],
                     $_POST['body'],
-                    (int)$id
+                    $id
                 )
             );
 
+            $article = $updateArticle->getArticle();
 
-            header('Location: /post/' . $article->getArticle()->getPostID());
-            return $article;
+            header('Location: /post/' . $article->getPostID());
         } catch (\Exception $exception) {
 
         }

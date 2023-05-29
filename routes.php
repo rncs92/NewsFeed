@@ -12,7 +12,7 @@ return [
     ['POST', '/', [ArticleController::class, 'store']],
     //['GET', '/post', [ArticleController::class, 'show']],
     //Article Edit
-    ['GET', '/post/{id:\d+}/edit', [ArticleController::class, 'editView']],
+    ['GET', '/post/{id:\d+}/edit', [ArticleController::class, 'update']],
     ['POST', '/post/{id:\d+}', [ArticleController::class, 'edit']],
     //Users
     ['GET', '/user', [UserController::class, 'show']],

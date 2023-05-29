@@ -63,4 +63,11 @@ class Article
     {
         $this->postID = $postID;
     }
+
+    public function edit(array $attributes): void
+    {
+        foreach ($attributes as $attribute => $value) {
+            $this->{$attribute} = $value;
+        }
+    }
 }
