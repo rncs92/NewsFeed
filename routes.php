@@ -10,10 +10,10 @@ return [
     //Article Create
     ['GET', '/create', [ArticleController::class, 'create']],
     ['POST', '/', [ArticleController::class, 'store']],
-    //['GET', '/post', [ArticleController::class, 'show']],
     //Article Edit
     ['GET', '/post/{id:\d+}/edit', [ArticleController::class, 'update']],
     ['POST', '/post/{id:\d+}', [ArticleController::class, 'edit']],
+    ['POST', '/post/{id:\d+}/delete', [ArticleController::class, 'delete']],
     //Users
     ['GET', '/user', [UserController::class, 'show']],
     ['GET', '/user/{id:\d+}', [UserController::class, 'show']],

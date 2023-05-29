@@ -56,7 +56,7 @@ class PDOArticleRepository implements ArticleRepository
             ->fetchAllAssociative();
 
         $articles = [];
-        foreach($collection as $article) {
+        foreach ($collection as $article) {
             $articles[] = $this->buildModel($article);
         }
 
@@ -99,6 +99,17 @@ class PDOArticleRepository implements ArticleRepository
             ->setParameter(1, $article->getTitle())
             ->setParameter(2, $article->getBody())
             ->setParameter(3, $article->getPostID());
+
+        $queryBuilder->executeQuery();
+    }
+
+    public function delete(int $articleId): void
+    {
+        $queryBuilder = $this->queryBuilder;
+        $queryBuilder
+            ->delete('Articles')
+            ->where('id = ?')
+            ->setParameter(0, $articleId);
 
         $queryBuilder->executeQuery();
     }

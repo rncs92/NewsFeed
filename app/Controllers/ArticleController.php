@@ -7,6 +7,7 @@ use NewsFeed\Exceptions\ResourceNotFoundException;
 use NewsFeed\Models\Article;
 use NewsFeed\Services\Article\Create\CreatePDOArticleRequest;
 use NewsFeed\Services\Article\Create\CreatePDOArticleService;
+use NewsFeed\Services\Article\Delete\DeletePDOArticleService;
 use NewsFeed\Services\Article\Edit\EditPDOArticleRequest;
 use NewsFeed\Services\Article\Edit\EditPDOArticleServices;
 use NewsFeed\Services\Article\IndexArticleServices;
@@ -19,19 +20,22 @@ class ArticleController
     private ShowArticleServices $showArticleServices;
     private CreatePDOArticleService $createPDOArticleService;
     private EditPDOArticleServices $editPDOArticleServices;
+    private DeletePDOArticleService $deletePDOArticleService;
 
 
     public function __construct(
         IndexArticleServices    $indexArticleServices,
         ShowArticleServices     $showArticleServices,
         CreatePDOArticleService $createPDOArticleService,
-        EditPDOArticleServices  $editPDOArticleServices
+        EditPDOArticleServices  $editPDOArticleServices,
+        DeletePDOArticleService $deletePDOArticleService
     )
     {
         $this->indexArticleServices = $indexArticleServices;
         $this->showArticleServices = $showArticleServices;
         $this->createPDOArticleService = $createPDOArticleService;
         $this->editPDOArticleServices = $editPDOArticleServices;
+        $this->deletePDOArticleService = $deletePDOArticleService;
     }
 
     public function index(): TwigView
@@ -114,6 +118,19 @@ class ArticleController
             $article = $updateArticle->getArticle();
 
             header('Location: /post/' . $article->getPostID());
+        } catch (\Exception $exception) {
+
+        }
+    }
+
+    public function delete(array $vars): void
+    {
+        try {
+            $articleId = (int)$vars['id'];
+
+            $this->deletePDOArticleService->handle($articleId);
+
+            header('Location: /');
         } catch (\Exception $exception) {
 
         }

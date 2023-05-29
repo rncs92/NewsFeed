@@ -2,6 +2,7 @@
 
 
 namespace NewsFeed\Repository\Article;
+
 use Carbon\Carbon;
 use NewsFeed\Models\Article;
 
@@ -16,5 +17,7 @@ interface ArticleRepository
     public function save(Article $article): void;
 
     public function update(Article $article): void;
+
+    public function delete(int $articleId): void;
 
 }
