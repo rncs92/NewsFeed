@@ -10,7 +10,7 @@ use NewsFeed\Services\Article\Create\CreatePDOArticleService;
 use NewsFeed\Services\Article\Delete\DeletePDOArticleService;
 use NewsFeed\Services\Article\Edit\EditPDOArticleRequest;
 use NewsFeed\Services\Article\Edit\EditPDOArticleServices;
-use NewsFeed\Services\Article\IndexArticleServices;
+use NewsFeed\Services\Article\Index\IndexArticleServices;
 use NewsFeed\Services\Article\Show\ShowArticleRequest;
 use NewsFeed\Services\Article\Show\ShowArticleServices;
 
@@ -42,7 +42,7 @@ class ArticleController
     {
         $articles = $this->indexArticleServices->handle();
 
-        return new TwigView('index', [
+        return new TwigView('Index/index', [
             'posts' => $articles,
         ]);
     }
@@ -54,12 +54,12 @@ class ArticleController
             $articleRequest = new ShowArticleRequest((int)$articleId);
             $response = $this->showArticleServices->handle($articleRequest);
 
-            return new TwigView('post', [
+            return new TwigView('Articles/post', [
                 'post' => $response->getArticle(),
                 'comments' => $response->getComments(),
             ]);
         } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notfound', []);
+            return new TwigView('Error/notfound', []);
         }
     }
 
@@ -97,7 +97,7 @@ class ArticleController
                 'post' => $response->getArticle()
             ]);
         } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notfound', []);
+            return new TwigView('Error/notfound', []);
         }
     }
 
@@ -118,6 +118,7 @@ class ArticleController
             $article = $updateArticle->getArticle();
 
             header('Location: /post/' . $article->getPostID());
+            exit();
         } catch (\Exception $exception) {
 
         }
@@ -131,6 +132,7 @@ class ArticleController
             $this->deletePDOArticleService->handle($articleId);
 
             header('Location: /');
+            exit();
         } catch (\Exception $exception) {
 
         }

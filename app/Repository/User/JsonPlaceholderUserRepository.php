@@ -66,16 +66,10 @@ class JsonPlaceholderUserRepository implements UserRepository
     private function buildModel(stdClass $user): User
     {
         return new User(
-            $user->id,
             $user->name,
             $user->username,
             $user->email,
-            $user->address->street,
-            $user->address->city,
-            $user->company->name,
-            $user->company->bs,
-            $user->phone,
-            $user->company->catchPhrase,
+            $user->id,
         );
     }
 }

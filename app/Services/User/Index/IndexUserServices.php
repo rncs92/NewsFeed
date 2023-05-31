@@ -1,6 +1,6 @@
 <?php
 
-namespace NewsFeed\Services\User;
+namespace NewsFeed\Services\User\Index;
 
 
 use NewsFeed\Exceptions\ResourceNotFoundException;

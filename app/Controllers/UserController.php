@@ -4,7 +4,7 @@ namespace NewsFeed\Controllers;
 
 use NewsFeed\Core\TwigView;
 use NewsFeed\Exceptions\ResourceNotFoundException;
-use NewsFeed\Services\User\IndexUserServices;
+use NewsFeed\Services\User\Index\IndexUserServices;
 use NewsFeed\Services\User\Show\ShowUserRequest;
 use NewsFeed\Services\User\Show\ShowUserService;
 
@@ -23,7 +23,7 @@ class UserController
     {
         $users = $this->userServices->handle();
 
-        return new TwigView('users', [
+        return new TwigView('User/users', [
             'users' => $users,
         ]);
     }
@@ -34,12 +34,12 @@ class UserController
             $userId = isset($vars['id']) ? (int)$vars['id'] : 1;
             $response = $this->showUserService->handle(new ShowUserRequest($userId));
 
-            return new TwigView('user', [
+            return new TwigView('User/user', [
                 'user' => $response->getUser(),
                 'posts' => $response->getArticle(),
             ]);
         } catch (ResourceNotFoundException $exception) {
-            return new TwigView('notFound', []);
+            return new TwigView('Error/notFound', []);
         }
     }
 }

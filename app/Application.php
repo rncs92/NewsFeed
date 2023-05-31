@@ -5,10 +5,10 @@ namespace NewsFeed;
 use NewsFeed\Models\Article;
 use NewsFeed\Models\Comment;
 use NewsFeed\Models\User;
-use NewsFeed\Services\Article\IndexArticleServices;
+use NewsFeed\Services\Article\Index\IndexArticleServices;
 use NewsFeed\Services\Article\Show\ShowArticleRequest;
 use NewsFeed\Services\Article\Show\ShowArticleServices;
-use NewsFeed\Services\User\IndexUserServices;
+use NewsFeed\Services\User\Index\IndexUserServices;
 use NewsFeed\Services\User\Show\ShowUserRequest;
 use NewsFeed\Services\User\Show\ShowUserService;
 

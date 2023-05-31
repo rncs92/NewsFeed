@@ -1,31 +1,18 @@
 <?php
 
-namespace NewsFeed\Models;
+namespace NewsFeed\Services\User\Register;
 
-class User
+class RegisterPDOUserRequest
 {
-    private ?int $userid;
     private string $name;
     private string $username;
     private string $email;
 
-    public function __construct(
-        string $name,
-        string $username,
-        string $email,
-        int    $userid = null
-    )
-
+    public function __construct(string $name, string $username, string $email)
     {
-        $this->userid = $userid;
         $this->name = $name;
         $this->username = $username;
         $this->email = $email;
-    }
-
-    public function getUserid(): ?int
-    {
-        return $this->userid;
     }
 
     public function getName(): string
@@ -41,10 +28,5 @@ class User
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function setUserid(?int $userid): void
-    {
-        $this->userid = $userid;
     }
 }

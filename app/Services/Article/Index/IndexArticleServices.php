@@ -1,6 +1,6 @@
 <?php
 
-namespace NewsFeed\Services\Article;
+namespace NewsFeed\Services\Article\Index;
 
 use NewsFeed\Exceptions\ResourceNotFoundException;
 use NewsFeed\Models\Article;
