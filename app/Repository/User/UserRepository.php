@@ -12,4 +12,6 @@ interface UserRepository
     public function createCollection(): array;
 
     public function save(User $user): void;
+
+    public function byEmail(string $email): ?User;
 }

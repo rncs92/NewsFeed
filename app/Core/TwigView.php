@@ -2,7 +2,7 @@
 
 namespace NewsFeed\Core;
 
-class TwigView
+class TwigView implements Response
 {
     private string $template;
     private array $response;

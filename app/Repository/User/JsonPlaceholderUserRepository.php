@@ -69,7 +69,17 @@ class JsonPlaceholderUserRepository implements UserRepository
             $user->name,
             $user->username,
             $user->email,
+            'password',
             $user->id,
         );
+    }
+
+    public function save(User $user): void
+    {
+    }
+
+    public function byEmail(string $email): ?User
+    {
+        return null;
     }
 }

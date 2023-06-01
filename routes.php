@@ -17,4 +17,7 @@ return [
     //Users
     ['GET', '/user', [UserController::class, 'show']],
     ['GET', '/user/{id:\d+}', [UserController::class, 'show']],
+    //Register
+    ['GET', '/register', [UserController::class, 'register']],
+    ['POST', '/register', [UserController::class, 'store']],
 ];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NewsFeed\Repository\User;
 
@@ -28,6 +28,26 @@ class PDOUserRepository implements UserRepository
             ->setParameter(0, $userId)
             ->fetchAssociative();
 
+        if (!$user) {
+            return null;
+        }
+
+        return $this->buildModel($user);
+    }
+
+    public function byEmail(string $email): ?User
+    {
+        $queryBuilder = $this->queryBuilder;
+        $user = $queryBuilder->select('*')
+            ->from('users')
+            ->where('email = ?')
+            ->setParameter(0, $email)
+            ->fetchAssociative();
+
+        if (!$user) {
+            return null;
+        }
+
         return $this->buildModel($user);
     }
 
@@ -49,31 +69,33 @@ class PDOUserRepository implements UserRepository
     {
         $queryBuilder = $this->queryBuilder;
         $queryBuilder
-            ->insert('user')
+            ->insert('users')
             ->values(
                 [
                     'name' => '?',
                     'username' => '?',
                     'email' => '?',
-
+                    'password' => '?'
                 ]
             )
             ->setParameter(0, $user->getName())
             ->setParameter(1, $user->getUsername())
-            ->setParameter(2, $user->getEmail());
+            ->setParameter(2, $user->getEmail())
+            ->setParameter(3, $user->getPassword());
 
         $queryBuilder->executeQuery();
 
         $user->setUserid((int)$this->connection->lastInsertId());
     }
 
-    private function buildModel(array $user): User
+    private function buildModel($user): User
     {
         return new User(
             $user['name'],
             $user['username'],
             $user['email'],
-            $user['id'],
+            $user['password'],
+            (int)$user['id']
         );
     }
 }

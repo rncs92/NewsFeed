@@ -108,4 +108,12 @@ class JsonPlaceholderArticleRepository implements ArticleRepository
     public function edit(Article $article): void
     {
     }
+
+    public function update(Article $article): void
+    {
+    }
+
+    public function delete(int $articleId): void
+    {
+    }
 }

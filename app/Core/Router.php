@@ -11,19 +11,20 @@ use NewsFeed\Repository\Article\PDOArticleRepository;
 use NewsFeed\Repository\Comment\CommentRepository;
 use NewsFeed\Repository\Comment\JsonPlaceholderCommentRepository;
 use NewsFeed\Repository\User\JsonPlaceholderUserRepository;
+use NewsFeed\Repository\User\PDOUserRepository;
 use NewsFeed\Repository\User\UserRepository;
 use function FastRoute\simpleDispatcher;
 
 
 class Router
 {
-    public static function response(array $routes): ?TwigView
+    public static function response(array $routes): Response
     {
 
         $builder = new ContainerBuilder();
         $builder->addDefinitions([
             ArticleRepository::class => new PDOArticleRepository(),
-            UserRepository::class => new JsonPlaceholderUserRepository(),
+            UserRepository::class => new PDOUserRepository(),
             CommentRepository::class => new JsonPlaceholderCommentRepository()
         ]);
         $container = $builder->build();
@@ -48,10 +49,8 @@ class Router
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                return null;
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $routeInfo[1];
-                return null;
                 break;
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
@@ -62,6 +61,5 @@ class Router
 
                 return $controller->{$methodName}($vars);
         }
-        return null;
     }
 }
