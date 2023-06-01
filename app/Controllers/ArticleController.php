@@ -41,9 +41,11 @@ class ArticleController
     public function index(): TwigView
     {
         $articles = $this->indexArticleServices->handle();
+        $authId = $_SESSION['authid'];
 
         return new TwigView('Index/index', [
             'posts' => $articles,
+            'session' => $authId
         ]);
     }
 

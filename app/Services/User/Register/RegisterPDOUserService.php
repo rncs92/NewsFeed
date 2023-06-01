@@ -24,7 +24,7 @@ class RegisterPDOUserService
 
 
         if ($request->getPassword() !== $request->getConfirmPassword()) {
-            throw new InvalidArgumentException('Password do not match!');
+            throw new InvalidArgumentException('Passwords do not match!');
         }
 
 
